@@ -5,6 +5,7 @@ import React from 'react';
 import { Button } from '../../components/Button';
 import { Container, Row } from './styles';
 
+// Les types pour les réponses et les questions
 type Answer = {
   answer: string;
   isCorrect: boolean;
@@ -22,13 +23,25 @@ export function Quiz1() {
   const [selectedAnswers, setSelectedAnswers] = useState<Array<number>>([]);
   const [showButton, setShowButton] = useState<boolean>(false);
   const [showScore, setShowScore] = useState<boolean>(false);
+  const [error, setError] = useState(null);
 
+  // Charger les questions depuis le serveur
   useEffect(() => {
     fetch("/environment_questions")
-      .then((response) => response.json())
-      .then((data: Question[]) => setQuestions(data));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("HTTP error " + response.status);
+        }
+        return response.json();
+      })
+      .then((data: Question[]) => setQuestions(data))
+      .catch((error) => {
+        console.error('Error:', error);
+        setError(error);
+      });
   }, []);
-
+  
+  // Fonctionalite pour gérer le clic sur une option de réponse
   const handleAnswerOptionClick = (index: number) => {
     if (selectedAnswers.includes(index)) {
       setSelectedAnswers(selectedAnswers.filter((value) => value !== index));
@@ -37,6 +50,7 @@ export function Quiz1() {
     }
   };
 
+  // Fonctionalite pour gérer le clic sur le bouton de la question suivante
   const handleNextQuestionClick = () => {
     const questionAnswers = questions![currentQuestionIndex].answers;
     const correctAnswersIndexes = questionAnswers
@@ -60,15 +74,15 @@ export function Quiz1() {
     }
   };
   
-
+  // Affichage du score utilisateur
   const handleSoumetreClick = () => {
     setShowScore(true);
   };
 
+  // Rafraîchir la page
   const handleReloadPage = () => {
     window.location.reload();
   };
-
 
   return (
     <div className="App">

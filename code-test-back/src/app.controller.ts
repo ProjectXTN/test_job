@@ -1,7 +1,7 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import {
   EnvironmentQuestionsService,
-  MitigationQuestionsService
+  MitigationQuestionsService,
 } from './environmentQuestionsService';
 
 @Controller()
@@ -9,7 +9,7 @@ export class AppController {
   constructor(
     private readonly environmentQuestionsService: EnvironmentQuestionsService,
     @Inject('MitigationQuestionsService')
-    private readonly mitigationQuestionsService: MitigationQuestionsService
+    private readonly mitigationQuestionsService: MitigationQuestionsService,
   ) {}
 
   @Get('environment_questions')

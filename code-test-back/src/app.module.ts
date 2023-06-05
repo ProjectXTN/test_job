@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import {
   EnvironmentQuestionsService,
-  MitigationQuestionsService
+  MitigationQuestionsService,
 } from './environmentQuestionsService';
 
 @Module({
@@ -12,8 +12,8 @@ import {
     EnvironmentQuestionsService,
     {
       provide: 'MitigationQuestionsService',
-      useClass: MitigationQuestionsService
-    }
-  ]
+      useClass: MitigationQuestionsService,
+    },
+  ],
 })
 export class AppModule {}
