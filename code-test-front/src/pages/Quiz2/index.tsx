@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Container, Row } from './styles';
 
+// Les types pour les réponses et les questions
 type Answer = {
   answer: string;
   isCorrect: boolean;
